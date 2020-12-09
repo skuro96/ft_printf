@@ -6,6 +6,7 @@
 # include <unistd.h> // write
 # include <stdarg.h> // va_start, va_arg, va_copy, va_end
 # include <stdbool.h> //bool
+# include <limits.h>
 
 int		ft_printf(const char *, ...);
 

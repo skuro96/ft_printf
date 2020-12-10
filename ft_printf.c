@@ -5,6 +5,22 @@ int		ft_putchar(char c)
 	return (write(1, &c, 1));
 }
 
+int		ft_putchar_info(char c, t_info info)
+{
+	int	len;
+	int	f;
+
+	f = (info.flag[0] == '0' ? '0' : ' ');
+	len = 0;
+	if (info.flag[0] == '-')
+		len += ft_putchar(c);
+	while (len < info.width - 1)
+		len += ft_putchar(f);
+	if (info.flag[0] != '-')
+		len += ft_putchar(c);
+	return (len);
+}
+
 int		ft_strlen(const char *str)
 {
 	int i;
@@ -38,26 +54,32 @@ int		ft_putstr(char *src, t_info info)
 	int len;
 
 	if (!src)
-		str = ft_strdup("(null)");
+		str = ft_strdup("(null)"); // free;
 	else
 		str = src;
 	len = 0;
-	if (info.dot)
+	if (info.dot) // 精度よりもフィールド幅優先
 	{
-		while (len < info.precision)
+		while (len < info.precision && len < ft_strlen(str))
 		{
 			if (len < info.width - ft_strlen(str))
 				len += ft_putchar(' ');
+				// len += (info.flag[0] == '-' ? ft_putchar(*(str + len)) : ft_putchar(' '));
 			else
-				len += ft_putchar(*str++);
+				len += ft_putchar(*(str + len));
+				// len += (info.flag[0] == '-' ? ft_putchar(' ') : ft_putchar(*(str + len)));
 		}
 		return (len);
 	}
 	else
 	{
-		while (len < info.width - ft_strlen(str))
+		if (info.flag[0] == '-')
+			len += write(1, str, ft_strlen(str));
+		while (len < (info.flag[0] == '-' ? info.width : info.width - ft_strlen(str)))
 			len += ft_putchar(' ');
-		return (len += write(1, str, ft_strlen(str)));
+		if (info.flag[0] != '-')
+			len += write(1, str, ft_strlen(str));
+		return (len);
 	}
 }
 
@@ -280,7 +302,7 @@ int		convert(const char **ptr, va_list it)
 	if (info.type == '%')
 		len += ft_putper(info);
 	else if (info.type == 'c')
-		len += ft_putchar(va_arg(it, int));
+		len += ft_putchar_info(va_arg(it, int), info);
 	else if (info.type == 's')
 		len += ft_putstr(va_arg(it, char *), info);
 	else if (info.type == 'p')

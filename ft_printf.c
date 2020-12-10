@@ -1,20 +1,11 @@
 #include "ft_printf.h"
 
-typedef struct	s_info
-{
-	char	flag[2];
-	int		width;
-	bool	dot;
-	int 	precision;
-	char	type;
-}				t_info;
-
 int		ft_putchar(char c)
 {
 	return (write(1, &c, 1));
 }
 
-int		ft_strlen(char *str)
+int		ft_strlen(const char *str)
 {
 	int i;
 
@@ -24,16 +15,64 @@ int		ft_strlen(char *str)
 	return (i);
 }
 
-int		ft_putstr(char *str)
+char	*ft_strdup(const char *src)
 {
-	if (!str)
-		return (write(1, "(null)", 6));
-	return (write(1, str, ft_strlen(str)));
+	char	*dest;
+	int		i;
+
+	i = 0;
+	if ((dest = malloc(sizeof(char) * (ft_strlen(src) + 1))) == NULL)
+		return (NULL);
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
-int		ft_putper(void)
+int		ft_putstr(char *src, t_info info)
 {
-	return ft_putchar('%');
+	char *str;
+	int len;
+
+	if (!src)
+		str = ft_strdup("(null)");
+	else
+		str = src;
+	len = 0;
+	if (info.dot)
+	{
+		while (len < info.precision)
+		{
+			if (len < info.width - ft_strlen(str))
+				len += ft_putchar(' ');
+			else
+				len += ft_putchar(*str++);
+		}
+		return (len);
+	}
+	else
+	{
+		while (len < info.width - ft_strlen(str))
+			len += ft_putchar(' ');
+		return (len += write(1, str, ft_strlen(str)));
+	}
+}
+
+int		ft_putper(t_info info)
+{
+	int	len;
+	int	c;
+
+	c = (info.flag[0] == '0' ? '0' : ' ');
+	len = 0;
+	if (info.flag[0] == '-')
+		len += ft_putchar('%');
+	while (len < info.width - 1)
+		len += ft_putchar(c);
+	return (len += (info.flag[0] == '-' ? ft_putchar(' '): ft_putchar('%')));
 }
 
 int		ft_putnbr(int n)
@@ -212,6 +251,8 @@ void	set_precision(const char **ptr, t_info *info, va_list it)
 			*ptr += dig;
 		}
 	}
+	else
+		info->dot = false;
 }
 
 void	set_type(const char **ptr, t_info *info)
@@ -237,11 +278,11 @@ int		convert(const char **ptr, va_list it)
 	set_info(ptr, &info, it);
 	// printf("\nflag: %s\nwidth: %d\ndot: %d\nprecision: %d\ntype=%c\n\n", info.flag, info.width, info.dot, info.precision, info.type);
 	if (info.type == '%')
-		len += ft_putper();
+		len += ft_putper(info);
 	else if (info.type == 'c')
 		len += ft_putchar(va_arg(it, int));
 	else if (info.type == 's')
-		len += ft_putstr(va_arg(it, char *));
+		len += ft_putstr(va_arg(it, char *), info);
 	else if (info.type == 'p')
 		len += ft_putaddr(va_arg(it, void *));
 	else if (info.type == 'd' || info.type == 'i')

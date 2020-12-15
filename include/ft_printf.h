@@ -17,6 +17,14 @@ typedef struct	s_info
 	char	type;
 }				t_info;
 
-int		ft_printf(const char *, ...);
+int				ft_printf(const char *, ...);
+void			set_info(const char **ptr, t_info *info, va_list it);
+int				digits(int nbr);
+int				ft_atoi(const char *str);
+int				ft_putchar(char c);
+int				ft_strlen(const char *str);
+char			*ft_strdup(const char *src);
+char	*ft_itoa(int n);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

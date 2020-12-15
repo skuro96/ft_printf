@@ -1,10 +1,5 @@
 #include "ft_printf.h"
 
-int		ft_putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
 int		ft_putchar_info(char c, t_info info)
 {
 	int	len;
@@ -21,34 +16,34 @@ int		ft_putchar_info(char c, t_info info)
 	return (len);
 }
 
-int		ft_strlen(const char *str)
+int		ft_putstr(char *str)
 {
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	return write(1, str, ft_strlen(str));
 }
 
-char	*ft_strdup(const char *src)
-{
-	char	*dest;
-	int		i;
+// int		ft_putstr(char *src, t_info info)
+// {
+// 	char *str;
+// 	int len;
+// 	int strlen;
 
-	i = 0;
-	if ((dest = malloc(sizeof(char) * (ft_strlen(src) + 1))) == NULL)
-		return (NULL);
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
+// 	if (!src)
+// 		str = ft_strdup("(null)"); // free;
+// 	else
+// 		str = src;
+// 	len = 0;
+// 	strlen = ft_strlen(str);
+// 	while (len < info.width)
+// 	{
+// 		if (len < info.width - strlen)
+// 			len += (info.flag[0] == '-' ? ft_putchar(*str++) : ft_putchar(' '));
+// 		else
+// 			len += (info.flag[0] == '-' ? ft_putchar(' ') : ft_putchar(*str++));
+// 	}
+// 	return (len);
+// }
 
-int		ft_putstr(char *src, t_info info)
+int		ft_putstr_info(char *src, t_info info)
 {
 	char *str;
 	int len;
@@ -116,6 +111,60 @@ int		ft_putnbr(int n)
 	return (len);
 }
 
+char	*format_num(int n, t_info info)
+{
+	char *tmp;
+	char *zeros;
+	char *ret;
+
+	if (!info.dot || info.precision < (n < 0 ? digits(-n) : digits(n)))
+		return (ft_itoa(n));
+	int size = (n < 0 ? info.precision - digits(-n) + 1 : info.precision - digits(n));
+	zeros = malloc(size + 1);
+	int i = 0;
+	while (i < size)
+	{
+		if (i == 0 && n < 0)
+			zeros[i] = '-';
+		else
+			zeros[i] = '0';
+		i++;
+	}
+	zeros[i] = '\0';
+	tmp = (n < 0 ? ft_itoa(-n) : ft_itoa(n));
+	ret = ft_strjoin(zeros, tmp);
+	free(zeros);
+	free(tmp);
+	return (ret);
+}
+
+int		ft_putnbr_info(int n, t_info info) // itoa使った方がたぶん楽
+{
+	int len;
+	int digit;
+	char *num_str;
+
+	len = 0;
+	num_str = format_num(n, info); // free;
+	digit = ft_strlen(num_str);
+	if (info.width >= 0)
+	{
+		if (info.flag[0] == '-')
+			ft_putstr(num_str);
+		while (len < info.width - digit)
+		{
+			len += ft_putchar(' ');
+		}
+		if (info.flag[0] != '-')
+			len += ft_putstr(num_str);
+	}
+	else
+	{
+		len += ft_putstr(num_str);
+	}
+	return (len);
+}
+
 int		ft_putunbr(unsigned int n)
 {
 	int len;
@@ -166,131 +215,6 @@ int		ft_putaddr(void *ptr)
 	return ft_puthex_addr(addr);
 }
 
-int	ft_isdigit(int c)
-{
-	return ('0' <= c && c <= '9');
-}
-
-int		digits(unsigned int nbr)
-{
-	int dig;
-
-	dig = 1;
-	while (nbr >= 10)
-	{
-		dig++;
-		nbr /= 10;
-	}
-	return (dig);
-}
-
-int	ft_atoi(const char *str)
-{
-	int				i;
-	int				sign;
-	unsigned long	ans;
-
-	i = 0;
-	while (str[i] == ' ' || ('\t' <= str[i] && str[i] <= '\r'))
-		i++;
-	sign = 1;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	ans = 0;
-	while ('0' <= str[i] && str[i] <= '9')
-	{
-		ans = ans * 10 + str[i] - '0';
-		if (sign < 0 && ans >= (unsigned long)(-LONG_MIN))
-			return (0);
-		if (sign > 0 && ans >= LONG_MAX)
-			return (-1);
-		i++;
-	}
-	return ((int)(ans * sign));
-}
-
-bool	inrange(char c, char begin, char end)
-{
-	return (begin <= c && c <= end);
-}
-
-void	set_flag(const char **ptr, t_info *info)
-{
-	if (**ptr == '0')
-	{
-		info->flag[0] = *(*ptr)++;
-		if (**ptr == '-')
-			info->flag[1] = *(*ptr)++;
-	}
-	else if (**ptr == '-')
-	{
-		info->flag[0] = *(*ptr)++;
-		if (**ptr == '0')
-			info->flag[1] = *(*ptr)++;
-	}
-}
-
-void	set_width(const char **ptr, t_info *info, va_list it)
-{
-	int dig;
-
-	if (**ptr == '*')
-	{
-		info->width = va_arg(it, int);
-		(*ptr)++;
-	}
-	else if (ft_isdigit(**ptr))
-	{
-		info->width = ft_atoi(*ptr);
-		dig = digits(info->width);
-		*ptr += dig;
-	}
-	else
-		info->width = 0;
-}
-
-void	set_precision(const char **ptr, t_info *info, va_list it)
-{
-	int dig;
-
-	if (**ptr == '.')
-	{
-		info->dot = true;
-		(*ptr)++;
-		if (**ptr == '*')
-		{
-			info->precision = va_arg(it, int);
-			(*ptr)++;
-		}
-		else if (ft_isdigit(**ptr))
-		{
-			info->precision = ft_atoi(*ptr);
-			dig = digits(info->precision);
-			*ptr += dig;
-		}
-	}
-	else
-		info->dot = false;
-}
-
-void	set_type(const char **ptr, t_info *info)
-{
-	info->type = **ptr;
-}
-
-void	set_info(const char **ptr, t_info *info, va_list it)
-{
-	(*ptr)++;
-	set_flag(ptr, info);
-	set_width(ptr, info, it);
-	set_precision(ptr, info, it);
-	set_type(ptr, info);
-}
-
 int		convert(const char **ptr, va_list it)
 {
 	int len;
@@ -298,17 +222,16 @@ int		convert(const char **ptr, va_list it)
 
 	len = 0;
 	set_info(ptr, &info, it);
-	// printf("\nflag: %s\nwidth: %d\ndot: %d\nprecision: %d\ntype=%c\n\n", info.flag, info.width, info.dot, info.precision, info.type);
 	if (info.type == '%')
 		len += ft_putper(info);
 	else if (info.type == 'c')
 		len += ft_putchar_info(va_arg(it, int), info);
 	else if (info.type == 's')
-		len += ft_putstr(va_arg(it, char *), info);
+		len += ft_putstr_info(va_arg(it, char *), info);
 	else if (info.type == 'p')
 		len += ft_putaddr(va_arg(it, void *));
 	else if (info.type == 'd' || info.type == 'i')
-		len += ft_putnbr(va_arg(it, int));
+		len += ft_putnbr_info(va_arg(it, int), info);
 	else if (info.type == 'u')
 		len += ft_putunbr(va_arg(it, unsigned int));
 	else if (info.type == 'x')

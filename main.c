@@ -1,16 +1,14 @@
-#include "ft_printf.h"
-
+//#include "ft_printf.h"
+#include <stdio.h>
+int ft_printf(const char *format, ...);
 // Total   OK: 408  KO: 623
 
 int main(void)
 {
 	int ret, ft_ret;
 
-	ret = printf("[%-c]\n", 'a');
-	ft_ret = ft_printf("[%-c]\n", 'a');
-
-	// ret = printf("[%7.5s]\n", "yolo");
-	// ft_ret = ft_printf("[%7.5s]\n", "yolo");
+	ret = printf("[%-s]\n", "hello");
+	ft_ret = ft_printf("[%-s]\n", "hello");
 	
 	printf("%d, %d\n", ret, ft_ret);
 	return (0);

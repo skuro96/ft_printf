@@ -1,14 +1,16 @@
 NAME = libftprintf.a
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+INCLUDE = -I ./include/
+
+CFLAGS = -Wall -Wextra -Werror $(INCLUDE)
 RM = rm -rf
 
-INCDIR = ./
-INCNAME = ft_printf.h
-
-SRCDIR = ./
-SRCNAME = ft_printf.c
+SRCDIR = ./src/
+SRCNAME = 
+SRCNAME += ft_printf.c
+SRCNAME += set_info.c
+SRCNAME += utils.c
 
 SRCS = $(addprefix $(SRCDIR),$(SRCNAME))
 OBJS = $(SRCS:.c=.o)

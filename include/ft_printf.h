@@ -30,5 +30,6 @@ char			*ft_strjoin(char const *s1, char const *s2);
 int				ft_putchar_info(char c, t_info info);
 int				ft_putint_info(int n, t_info info);
 int				ft_putstr(char *str);
+int		my_pow(int n, int pow);
 
 #endif

@@ -33,11 +33,21 @@ void	set_flag(const char **ptr, t_info *info)
 	{
 		(*ptr)++;
 		info->zero = true;
+		if (**ptr == '-')
+		{
+			(*ptr)++;
+			info->minus = true;
+		}
 	}
 	else if (**ptr == '-')
 	{
 		(*ptr)++;
 		info->minus = true;
+		if (**ptr == '0')
+		{
+			(*ptr)++;
+			info->zero = true;
+		}
 	}
 }
 

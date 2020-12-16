@@ -110,28 +110,6 @@ char	*ft_itoa(int n)
 	return (dest);
 }
 
-char	*ft_itoa_uint(unsigned int n)
-{
-	char *dest;
-	int len;
-	int i;
-	int dig;
-
-	len = digits(n);
-	if (!(dest = malloc(len + 1)))
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		dig = my_pow(10, len - i - 1);
-		dest[i] = n / dig + '0';
-		n %= dig;
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;

@@ -23,7 +23,7 @@ char	*format_num(int n, t_info info)
 		i++;
 	}
 	zeros[i] = '\0';
-	tmp = (n < 0 ? ft_itoa(-n) : ft_itoa(n));
+	tmp = (n < 0 ? ft_itoa(-n) : ft_itoa(n)); // overflow?
 	ret = ft_strjoin(zeros, tmp);
 	free(zeros);
 	free(tmp);

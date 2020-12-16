@@ -3,15 +3,15 @@
 int		ft_putchar_info(char c, t_info info)
 {
 	int	len;
-	int	f;
+	int	ch;
 
-	f = (info.flag[0] == '0' ? '0' : ' ');
+	ch = (info.zero ? '0' : ' ');
 	len = 0;
-	if (info.flag[0] == '-')
+	if (info.minus)
 		len += ft_putchar(c);
 	while (len < info.width - 1)
-		len += ft_putchar(f);
-	if (info.flag[0] != '-')
+		len += ft_putchar(ch);
+	if (!info.minus)
 		len += ft_putchar(c);
 	return (len);
 }
@@ -20,28 +20,6 @@ int		ft_putstr(char *str)
 {
 	return write(1, str, ft_strlen(str));
 }
-
-// int		ft_putstr(char *src, t_info info)
-// {
-// 	char *str;
-// 	int len;
-// 	int strlen;
-
-// 	if (!src)
-// 		str = ft_strdup("(null)"); // free;
-// 	else
-// 		str = src;
-// 	len = 0;
-// 	strlen = ft_strlen(str);
-// 	while (len < info.width)
-// 	{
-// 		if (len < info.width - strlen)
-// 			len += (info.flag[0] == '-' ? ft_putchar(*str++) : ft_putchar(' '));
-// 		else
-// 			len += (info.flag[0] == '-' ? ft_putchar(' ') : ft_putchar(*str++));
-// 	}
-// 	return (len);
-// }
 
 int		ft_putstr_info(char *src, t_info info)
 {
@@ -59,20 +37,20 @@ int		ft_putstr_info(char *src, t_info info)
 		{
 			if (len < info.width - ft_strlen(str))
 				len += ft_putchar(' ');
-				// len += (info.flag[0] == '-' ? ft_putchar(*(str + len)) : ft_putchar(' '));
+				// len += (info.minus ? ft_putchar(*(str + len)) : ft_putchar(' '));
 			else
 				len += ft_putchar(*(str + len));
-				// len += (info.flag[0] == '-' ? ft_putchar(' ') : ft_putchar(*(str + len)));
+				// len += (info.minus ? ft_putchar(' ') : ft_putchar(*(str + len)));
 		}
 		return (len);
 	}
 	else
 	{
-		if (info.flag[0] == '-')
+		if (info.minus)
 			len += write(1, str, ft_strlen(str));
-		while (len < (info.flag[0] == '-' ? info.width : info.width - ft_strlen(str)))
+		while (len < (info.minus ? info.width : info.width - ft_strlen(str)))
 			len += ft_putchar(' ');
-		if (info.flag[0] != '-')
+		if (!info.minus)
 			len += write(1, str, ft_strlen(str));
 		return (len);
 	}
@@ -83,13 +61,13 @@ int		ft_putper(t_info info)
 	int	len;
 	int	c;
 
-	c = (info.flag[0] == '0' ? '0' : ' ');
+	c = (info.zero ? '0' : ' ');
 	len = 0;
-	if (info.flag[0] == '-')
+	if (info.minus)
 		len += ft_putchar('%');
 	while (len < info.width - 1)
 		len += ft_putchar(c);
-	return (len += (info.flag[0] == '-' ? ft_putchar(' '): ft_putchar('%')));
+	return (len += (info.minus ? ft_putchar(' '): ft_putchar('%')));
 }
 
 int		ft_putnbr(int n)
@@ -116,10 +94,15 @@ char	*format_num(int n, t_info info)
 	char *tmp;
 	char *zeros;
 	char *ret;
+	int size;
 
+	// if (info.zero)
+	// 	return (n < 0 ? ft_itoa(-n) : ft_itoa(n));
+	if (info.dot && info.precision == 0)	
+		return (ft_strdup(""));
 	if (!info.dot || info.precision < (n < 0 ? digits(-n) : digits(n)))
 		return (ft_itoa(n));
-	int size = (n < 0 ? info.precision - digits(-n) + 1 : info.precision - digits(n));
+	size = (n < 0 ? info.precision - digits(-n) + 1 : info.precision - digits(n)); 
 	zeros = malloc(size + 1);
 	int i = 0;
 	while (i < size)
@@ -138,7 +121,7 @@ char	*format_num(int n, t_info info)
 	return (ret);
 }
 
-int		ft_putnbr_info(int n, t_info info) // itoa使った方がたぶん楽
+int		ft_putnbr_info(int n, t_info info)
 {
 	int len;
 	int digit;
@@ -149,14 +132,26 @@ int		ft_putnbr_info(int n, t_info info) // itoa使った方がたぶん楽
 	digit = ft_strlen(num_str);
 	if (info.width >= 0)
 	{
-		if (info.flag[0] == '-')
-			ft_putstr(num_str);
-		while (len < info.width - digit)
+		if (info.zero && !info.dot)
 		{
-			len += ft_putchar(' ');
-		}
-		if (info.flag[0] != '-')
+			len += (n < 0 ? ft_putchar(*num_str++) : 0);
+			while (len < info.width - digit + (n < 0 ? 1 : 0))
+				len += ft_putchar('0');
 			len += ft_putstr(num_str);
+		}
+		else
+		{
+			if (info.minus)
+				ft_putstr(num_str);
+			while (len < info.width - digit)
+			{
+				len += ft_putchar(' ');
+			}
+			if (info.minus)
+				len += ft_strlen(num_str);
+			else
+				len += ft_putstr(num_str);
+		}
 	}
 	else
 	{

@@ -1,27 +1,43 @@
 #include "ft_printf.h"
 
+// void	set_flag(const char **ptr, t_info *info)
+// {
+// 	if (**ptr == '0')
+// 	{
+// 		info->flag[0] = *(*ptr)++;
+// 		if (**ptr == '-')
+// 			info->flag[1] = *(*ptr)++;
+// 		else
+// 			info->flag[1] = 0;
+// 	}
+// 	else if (**ptr == '-')
+// 	{
+// 		info->flag[0] = *(*ptr)++;
+// 		if (**ptr == '0')
+// 			info->flag[1] = *(*ptr)++;
+// 		else
+// 			info->flag[1] = 0;
+// 	}
+// 	else
+// 	{
+// 		info->flag[0] = 0;
+// 		info->flag[1] = 0;
+// 	}
+// }
+
 void	set_flag(const char **ptr, t_info *info)
 {
+	info->zero = false;
+	info->minus = false;
 	if (**ptr == '0')
 	{
-		info->flag[0] = *(*ptr)++;
-		if (**ptr == '-')
-			info->flag[1] = *(*ptr)++;
-		else
-			info->flag[1] = 0;
+		(*ptr)++;
+		info->zero = true;
 	}
 	else if (**ptr == '-')
 	{
-		info->flag[0] = *(*ptr)++;
-		if (**ptr == '0')
-			info->flag[1] = *(*ptr)++;
-		else
-			info->flag[1] = 0;
-	}
-	else
-	{
-		info->flag[0] = 0;
-		info->flag[1] = 0;
+		(*ptr)++;
+		info->minus = true;
 	}
 }
 
@@ -60,6 +76,8 @@ void	set_precision(const char **ptr, t_info *info, va_list it)
 			info->precision = ft_atoi(*ptr);
 			*ptr += digits(info->precision);
 		}
+		else
+			info->precision = 0;
 	}
 	else
 		info->dot = false;

@@ -10,7 +10,8 @@
 
 typedef struct	s_info
 {
-	char	flag[2];
+	bool	zero;
+	bool	minus;
 	int		width;
 	bool	dot;
 	int 	precision;

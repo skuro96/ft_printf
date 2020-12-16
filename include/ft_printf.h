@@ -20,12 +20,15 @@ typedef struct	s_info
 
 int				ft_printf(const char *, ...);
 void			set_info(const char **ptr, t_info *info, va_list it);
-int				digits(int nbr);
+int				digits(unsigned int nbr);
 int				ft_atoi(const char *str);
 int				ft_putchar(char c);
 int				ft_strlen(const char *str);
 char			*ft_strdup(const char *src);
-char	*ft_itoa(int n);
-char	*ft_strjoin(char const *s1, char const *s2);
+char			*ft_itoa(int n);
+char			*ft_strjoin(char const *s1, char const *s2);
+int				ft_putchar_info(char c, t_info info);
+int				ft_putint_info(int n, t_info info);
+int				ft_putstr(char *str);
 
 #endif

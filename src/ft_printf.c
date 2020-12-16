@@ -1,26 +1,5 @@
 #include "ft_printf.h"
 
-int		ft_putchar_info(char c, t_info info)
-{
-	int	len;
-	int	ch;
-
-	ch = (info.zero ? '0' : ' ');
-	len = 0;
-	if (info.minus)
-		len += ft_putchar(c);
-	while (len < info.width - 1)
-		len += ft_putchar(ch);
-	if (!info.minus)
-		len += ft_putchar(c);
-	return (len);
-}
-
-int		ft_putstr(char *str)
-{
-	return write(1, str, ft_strlen(str));
-}
-
 int		ft_putstr_info(char *src, t_info info)
 {
 	char *str;
@@ -70,95 +49,6 @@ int		ft_putper(t_info info)
 	return (len += (info.minus ? ft_putchar(' '): ft_putchar('%')));
 }
 
-int		ft_putnbr(int n)
-{
-	unsigned int	nbr;
-	int				len;
-
-	len = 0;
-	if (n < 0)
-	{
-		len += ft_putchar('-');
-		nbr = (unsigned int)(n * -1);
-	}
-	else
-		nbr = n;
-	if (nbr >= 10)
-		len += ft_putnbr(nbr / 10);
-	len += ft_putchar(nbr % 10 + '0');
-	return (len);
-}
-
-char	*format_num(int n, t_info info)
-{
-	char *tmp;
-	char *zeros;
-	char *ret;
-	int size;
-
-	// if (info.zero)
-	// 	return (n < 0 ? ft_itoa(-n) : ft_itoa(n));
-	if (info.dot && info.precision == 0)	
-		return (ft_strdup(""));
-	if (!info.dot || info.precision < (n < 0 ? digits(-n) : digits(n)))
-		return (ft_itoa(n));
-	size = (n < 0 ? info.precision - digits(-n) + 1 : info.precision - digits(n)); 
-	zeros = malloc(size + 1);
-	int i = 0;
-	while (i < size)
-	{
-		if (i == 0 && n < 0)
-			zeros[i] = '-';
-		else
-			zeros[i] = '0';
-		i++;
-	}
-	zeros[i] = '\0';
-	tmp = (n < 0 ? ft_itoa(-n) : ft_itoa(n));
-	ret = ft_strjoin(zeros, tmp);
-	free(zeros);
-	free(tmp);
-	return (ret);
-}
-
-int		ft_putnbr_info(int n, t_info info)
-{
-	int len;
-	int digit;
-	char *num_str;
-
-	len = 0;
-	num_str = format_num(n, info); // free;
-	digit = ft_strlen(num_str);
-	if (info.width >= 0)
-	{
-		if (info.zero && !info.dot)
-		{
-			len += (n < 0 ? ft_putchar(*num_str++) : 0);
-			while (len < info.width - digit + (n < 0 ? 1 : 0))
-				len += ft_putchar('0');
-			len += ft_putstr(num_str);
-		}
-		else
-		{
-			if (info.minus)
-				ft_putstr(num_str);
-			while (len < info.width - digit)
-			{
-				len += ft_putchar(' ');
-			}
-			if (info.minus)
-				len += ft_strlen(num_str);
-			else
-				len += ft_putstr(num_str);
-		}
-	}
-	else
-	{
-		len += ft_putstr(num_str);
-	}
-	return (len);
-}
 
 int		ft_putunbr(unsigned int n)
 {
@@ -226,7 +116,7 @@ int		convert(const char **ptr, va_list it)
 	else if (info.type == 'p')
 		len += ft_putaddr(va_arg(it, void *));
 	else if (info.type == 'd' || info.type == 'i')
-		len += ft_putnbr_info(va_arg(it, int), info);
+		len += ft_putint_info(va_arg(it, int), info);
 	else if (info.type == 'u')
 		len += ft_putunbr(va_arg(it, unsigned int));
 	else if (info.type == 'x')

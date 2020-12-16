@@ -5,6 +5,11 @@ int		ft_putchar(char c)
 	return (write(1, &c, 1));
 }
 
+int		ft_putstr(char *str)
+{
+	return write(1, str, ft_strlen(str));
+}
+
 int		ft_strlen(const char *str)
 {
 	int i;
@@ -57,7 +62,7 @@ int	ft_atoi(const char *str)
 	return ((int)(ans * sign));
 }
 
-int		digits(int nbr)
+int		digits(unsigned int nbr)
 {
 	int dig;
 
@@ -100,6 +105,28 @@ char	*ft_itoa(int n)
 		dest[i++] = nbr / my_pow(10, len - 1) + '0';
 		nbr %= my_pow(10, len - 1);
 		len--;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ft_itoa_uint(unsigned int n)
+{
+	char *dest;
+	int len;
+	int i;
+	int dig;
+
+	len = digits(n);
+	if (!(dest = malloc(len + 1)))
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		dig = my_pow(10, len - i - 1);
+		dest[i] = n / dig + '0';
+		n %= dig;
+		i++;
 	}
 	dest[i] = '\0';
 	return (dest);

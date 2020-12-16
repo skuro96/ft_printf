@@ -7,8 +7,8 @@ int main(void)
 {
 	int ret, ft_ret;
 
-	ret = printf("[%7u]\n", 33);
-	ft_ret = ft_printf("[%7u]\n", 33);
+	ret = printf("[%08.5u]\n", 34);
+	ft_ret = ft_printf("[%08.5u]\n", 34);
 	
 	printf("%d, %d\n", ret, ft_ret);
 	return (0);

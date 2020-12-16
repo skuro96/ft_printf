@@ -31,5 +31,6 @@ int				ft_putchar_info(char c, t_info info);
 int				ft_putint_info(int n, t_info info);
 int				ft_putstr(char *str);
 int		my_pow(int n, int pow);
+int		ft_putuint_info(unsigned int n, t_info info);
 
 #endif

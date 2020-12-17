@@ -49,17 +49,6 @@ int		ft_putper(t_info info)
 	return (len += (info.minus ? ft_putchar(' '): ft_putchar('%')));
 }
 
-// int		ft_putunbr(unsigned int n)
-// {
-// 	int len;
-
-// 	len = 0;
-// 	if (n >= 10)
-// 		len += ft_putunbr(n / 10);
-// 	len += ft_putchar(n % 10 + '0');
-// 	return (len);
-// }
-
 int		ft_puthex(unsigned int n, char s)
 {
 	int		len;
@@ -99,6 +88,13 @@ int		ft_putaddr(void *ptr)
 	return ft_puthex_addr(addr);
 }
 
+// char	*ft_
+
+// int		ft_putaddr_info(void *ptr, t_info info)
+// {
+
+// }
+
 int		convert(const char **ptr, va_list it)
 {
 	int len;
@@ -119,9 +115,9 @@ int		convert(const char **ptr, va_list it)
 	else if (info.type == 'u')
 		len += ft_putuint_info(va_arg(it, unsigned int), info);
 	else if (info.type == 'x')
-		len += ft_puthex(va_arg(it, unsigned int), 'a');
+		len += ft_puthex_info(va_arg(it, unsigned int), 'a', info);
 	else if (info.type == 'X')
-		len += ft_puthex(va_arg(it, unsigned int), 'A');
+		len += ft_puthex_info(va_arg(it, unsigned int), 'A', info);
 	return (len);
 }
 

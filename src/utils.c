@@ -75,6 +75,19 @@ int		digits(unsigned int nbr)
 	return (dig);
 }
 
+int		digits_base(unsigned int n, unsigned int base)
+{
+	int dig;
+
+	dig = 1;
+	while (n >= base)
+	{
+		n /= base;
+		dig++;
+	}
+	return (dig);
+}
+
 int		my_pow(int n, int pow)
 {
 	if (pow == 0)

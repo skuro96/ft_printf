@@ -32,5 +32,7 @@ int				ft_putint_info(int n, t_info info);
 int				ft_putstr(char *str);
 int		my_pow(int n, int pow);
 int		ft_putuint_info(unsigned int n, t_info info);
+int		ft_puthex_info(unsigned int n, char a_size, t_info info);
+int		digits_base(unsigned int n, unsigned int base);
 
 #endif

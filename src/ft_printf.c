@@ -88,12 +88,69 @@ int		ft_putaddr(void *ptr)
 	return ft_puthex_addr(addr);
 }
 
-// char	*ft_
+int		len_addr(uintptr_t n)
+{
+	int len;
 
-// int		ft_putaddr_info(void *ptr, t_info info)
-// {
+	len = 3;
+	while (n >= 16)
+	{
+		n /= 16;
+		len++;
+	}
+	return (len);
+}
 
-// }
+char	*ft_itoa_addr(uintptr_t n)
+{
+	char	*dest;
+	int		len;
+	int		i;
+
+	len = len_addr(n);
+	if (!(dest = malloc(len + 1)))
+		return (NULL);
+	i = len - 1;
+	while (i >= 0)
+	{
+		if (i == 0)
+			dest[i] = '0';
+		else if (i == 1)
+			dest[i] = 'x';
+		else
+		{
+			dest[i] = (n % 16 < 10 ? n % 16 + '0' : n % 16 - 10 + 'a');
+			n /= 16;
+		}
+		i--;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+int		ft_putaddr_info(void *ptr, t_info info)
+{
+	char	*num_str;
+	int		dig;
+	int		len;
+
+	if (!(num_str = ft_itoa_addr((uintptr_t)ptr)))
+		return (0);
+	dig = ft_strlen(num_str);
+	len = 0;
+	if (info.width >= 0)
+	{
+		if (info.minus)
+			len += ft_putstr(num_str);
+		while (len < (info.minus ? info.width : info.width - dig))
+			len += ft_putchar(' ');
+		if (!info.minus)
+			len += ft_putstr(num_str);
+	}
+	else
+		len += ft_putstr(num_str);
+	return (len);
+}
 
 int		convert(const char **ptr, va_list it)
 {
@@ -109,7 +166,7 @@ int		convert(const char **ptr, va_list it)
 	else if (info.type == 's')
 		len += ft_putstr_info(va_arg(it, char *), info);
 	else if (info.type == 'p')
-		len += ft_putaddr(va_arg(it, void *));
+		len += ft_putaddr_info(va_arg(it, void *), info);
 	else if (info.type == 'd' || info.type == 'i')
 		len += ft_putint_info(va_arg(it, int), info);
 	else if (info.type == 'u')

@@ -4,6 +4,8 @@ char	*format_str(char *str, t_info info)
 {
 	if (!str)
 		return (info.dot ? ft_strndup("(null)", info.precision) : ft_strdup("(null)"));
+	else if (info.precision < 0)
+		return (ft_strdup(str));
 	else
 		return (info.dot ? ft_strndup(str, info.precision) : ft_strdup(str));
 }
@@ -13,7 +15,6 @@ int		ft_putstr_info(char *src, t_info info)
 	char *str;
 	int len;
 
-	(void)info;
 	if (!(str = format_str(src, info)))
 		return (0);
 	len = 0;

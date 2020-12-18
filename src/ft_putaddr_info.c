@@ -36,7 +36,7 @@ char	*ft_itoa_addr(uintptr_t n)
 		}
 		i--;
 	}
-	dest[i] = '\0';
+	dest[len] = '\0';
 	return (dest);
 }
 

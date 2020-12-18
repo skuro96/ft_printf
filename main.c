@@ -9,9 +9,9 @@ int main(void)
 
 	int a = 42;
 
-	ret = printf("[%p]\n", &a);
-	ft_ret = ft_printf("[%p]\n", &a);
-	
+	ret = printf("[%05.*d]\n", -15, 42);
+	ft_ret = ft_printf("[%05.*d]\n", -15, 42);
+
 	printf("%d, %d\n", ret, ft_ret);
 	return (0);
 }

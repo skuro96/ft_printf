@@ -58,7 +58,6 @@ int		ft_puthex_info(unsigned int n, char a_size, t_info info)
 	int		dig;
 	int		len;
 
-	(void)info;
 	if (!(num_str = format_hex(n, a_size, info)))
 		return (0);
 	dig = ft_strlen(num_str);

@@ -9,7 +9,7 @@ int		ft_putchar_info(char c, t_info info)
 	len = 0;
 	if (info.minus)
 		len += ft_putchar(c);
-	while (len < info.width - 1)
+	while (len < (info.minus ? info.width : info.width - 1))
 		len += ft_putchar(ch);
 	if (!info.minus)
 		len += ft_putchar(c);

@@ -7,9 +7,9 @@ char	*format_num(int n, t_info info)
 	char *ret;
 	int size;
 
-	if (info.dot && info.precision == 0)	
+	if (info.dot && info.precision == 0 && n == 0)
 		return (ft_strdup(""));
-	if (!info.dot || info.precision < (n < 0 ? digits(-n) : digits(n)))
+	if (!info.dot || info.precision < (n < 0 ? digits(-n) + 1 : digits(n)))
 		return (ft_itoa(n));
 	size = (n < 0 ? info.precision - digits(-n) + 1 : info.precision - digits(n)); 
 	zeros = malloc(size + 1);

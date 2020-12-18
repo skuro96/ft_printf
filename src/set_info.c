@@ -51,13 +51,21 @@ void	set_flag(const char **ptr, t_info *info)
 	}
 }
 
-void	set_width(const char **ptr, t_info *info, va_list it)
+void	set_width(const char **ptr, t_info *info, va_list ap)
 {
 	int dig;
+	int tmp;
 
 	if (**ptr == '*')
 	{
-		info->width = va_arg(it, int);
+		tmp = va_arg(ap, int);
+		if (tmp < 0)
+		{
+			info->minus = true;
+			info->width = -tmp;
+		}
+		else
+			info->width = tmp;
 		(*ptr)++;
 	}
 	else if ('0' <= **ptr && **ptr <= '9')
@@ -70,15 +78,19 @@ void	set_width(const char **ptr, t_info *info, va_list it)
 		info->width = -1;
 }
 
-void	set_precision(const char **ptr, t_info *info, va_list it)
+void	set_precision(const char **ptr, t_info *info, va_list ap)
 {
+	// int tmp;
+
 	if (**ptr == '.')
 	{
 		info->dot = true;
 		(*ptr)++;
 		if (**ptr == '*')
 		{
-			info->precision = va_arg(it, int);
+			// tmp = va_arg(ap, int);
+			// info->precision = (tmp < 0 ? 0 : tmp);
+			info->precision = va_arg(ap, int);
 			(*ptr)++;
 		}
 		else if ('0' <= **ptr && **ptr <= '9')
@@ -99,11 +111,11 @@ void	set_type(const char **ptr, t_info *info)
 	info->type = **ptr;
 }
 
-void	set_info(const char **ptr, t_info *info, va_list it)
+void	set_info(const char **ptr, t_info *info, va_list ap)
 {
 	(*ptr)++;
 	set_flag(ptr, info);
-	set_width(ptr, info, it);
-	set_precision(ptr, info, it);
+	set_width(ptr, info, ap);
+	set_precision(ptr, info, ap);
 	set_type(ptr, info);
 }

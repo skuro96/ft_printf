@@ -34,5 +34,8 @@ int		my_pow(int n, int pow);
 int		ft_putuint_info(unsigned int n, t_info info);
 int		ft_puthex_info(unsigned int n, char a_size, t_info info);
 int		digits_base(unsigned int n, unsigned int base);
+int		ft_putaddr_info(void *ptr, t_info info);
+char	*ft_strndup(const char *src, int n);
+int		ft_putstr_info(char *src, t_info info);
 
 #endif

@@ -84,7 +84,8 @@ void	set_precision(const char **ptr, t_info *info, va_list it)
 		else if ('0' <= **ptr && **ptr <= '9')
 		{
 			info->precision = ft_atoi(*ptr);
-			*ptr += digits(info->precision);
+			while ('0' <= **ptr && **ptr <= '9')
+				(*ptr)++;
 		}
 		else
 			info->precision = 0;

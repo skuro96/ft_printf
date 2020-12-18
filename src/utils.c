@@ -23,7 +23,7 @@ int		ft_strlen(const char *str)
 char	*ft_strdup(const char *src)
 {
 	char	*dest;
-	int		i;
+	int		i;	
 
 	i = 0;
 	if ((dest = malloc(sizeof(char) * (ft_strlen(src) + 1))) == NULL)
@@ -146,5 +146,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	dest[i + j] = '\0';
+	return (dest);
+}
+
+char	*ft_strndup(const char *src, int n)
+{
+	char	*dest;
+	int		i;
+
+	i = 0;
+	if (!(dest = malloc(sizeof(char) * (n + 1))))
+		return (NULL);
+	while (src[i] != '\0' && i < n)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
 	return (dest);
 }

@@ -15,6 +15,8 @@ SRCNAME += ft_putchar_info.c
 SRCNAME += ft_putint_info.c
 SRCNAME += ft_putuint_info.c
 SRCNAME += ft_puthex_info.c
+SRCNAME += ft_putaddr_info.c
+SRCNAME += ft_putstr_info.c
 
 SRCS = $(addprefix $(SRCDIR),$(SRCNAME))
 OBJS = $(SRCS:.c=.o)

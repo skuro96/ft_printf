@@ -30,8 +30,10 @@ char	*format_hex(unsigned int n, char a_size, t_info info)
 	char	*ret;
 	int		i;
 
-	if (info.dot && info.precision == 0)
+	if (info.dot && info.precision == 0 && n == 0)
 		return (ft_strdup(""));
+	if (info.dot && info.precision == 0)
+		return (ft_itoa_hex(n, a_size));
 	if (!info.dot || info.precision < digits_base(n, 16))
 		return (ft_itoa_hex(n, a_size));
 	size = info.precision - digits_base(n, 16);

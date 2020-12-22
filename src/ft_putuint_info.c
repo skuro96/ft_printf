@@ -30,7 +30,7 @@ char	*format_uint(unsigned int n, t_info info)
 	int size;
 	int i;
 
-	if (info.dot && info.precision == 0)
+	if (info.dot && info.precision == 0 && n == 0)
 		return (ft_strdup(""));
 	if (!info.dot || info.precision < digits(n))
 		return (ft_itoa_uint(n));

@@ -1,59 +1,61 @@
 #include "ft_printf.h"
 
-// void	set_flag(const char **ptr, t_info *info)
-// {
-// 	if (**ptr == '0')
-// 	{
-// 		info->flag[0] = *(*ptr)++;
-// 		if (**ptr == '-')
-// 			info->flag[1] = *(*ptr)++;
-// 		else
-// 			info->flag[1] = 0;
-// 	}
-// 	else if (**ptr == '-')
-// 	{
-// 		info->flag[0] = *(*ptr)++;
-// 		if (**ptr == '0')
-// 			info->flag[1] = *(*ptr)++;
-// 		else
-// 			info->flag[1] = 0;
-// 	}
-// 	else
-// 	{
-// 		info->flag[0] = 0;
-// 		info->flag[1] = 0;
-// 	}
-// }
+bool	is_flag(char c)
+{
+	return (c == '-' || c == '0');
+}
 
-void	set_flag(const char **ptr, t_info *info)
+void set_flag(const char **ptr, t_info *info)
 {
 	info->zero = false;
 	info->minus = false;
-	if (**ptr == '0')
+	while (is_flag(**ptr))
 	{
-		(*ptr)++;
-		info->zero = true;
 		if (**ptr == '-')
 		{
-			(*ptr)++;
 			info->minus = true;
+			info->zero = false;
 		}
-	}
-	else if (**ptr == '-')
-	{
-		(*ptr)++;
-		info->minus = true;
-		if (**ptr == '0')
-		{
-			(*ptr)++;
+		if (**ptr == '0' && !info->minus)
 			info->zero = true;
-		}
+		(*ptr)++;
 	}
+	// printf("minus : %d, zero : %d\n", info->minus, info->zero);
+}
+
+// void	set_flag(const char **ptr, t_info *info)
+// {
+// 	info->zero = false;
+// 	info->minus = false;
+// 	if (**ptr == '0')
+// 	{
+// 		(*ptr)++;
+// 		info->zero = true;
+// 		if (**ptr == '-')
+// 		{
+// 			(*ptr)++;
+// 			info->minus = true;
+// 		}
+// 	}
+// 	else if (**ptr == '-')
+// 	{
+// 		(*ptr)++;
+// 		info->minus = true;
+// 		if (**ptr == '0')
+// 		{
+// 			(*ptr)++;
+// 			info->zero = true;
+// 		}
+// 	}
+// }
+
+bool	is_digit(char c)
+{
+	return ('0' <= c && c <= '9');
 }
 
 void	set_width(const char **ptr, t_info *info, va_list ap)
 {
-	int dig;
 	int tmp;
 
 	if (**ptr == '*')
@@ -61,18 +63,22 @@ void	set_width(const char **ptr, t_info *info, va_list ap)
 		tmp = va_arg(ap, int);
 		if (tmp < 0)
 		{
-			info->minus = true;
+			if (!info->minus)
+			{
+				info->minus = true;
+				info->zero = false;
+			}
 			info->width = -tmp;
 		}
 		else
 			info->width = tmp;
 		(*ptr)++;
 	}
-	else if ('0' <= **ptr && **ptr <= '9')
+	else if (is_digit(**ptr))
 	{
 		info->width = ft_atoi(*ptr);
-		dig = digits(info->width);
-		*ptr += dig;
+		while (is_digit(**ptr))
+			(*ptr)++;
 	}
 	else
 		info->width = -1;
@@ -80,7 +86,7 @@ void	set_width(const char **ptr, t_info *info, va_list ap)
 
 void	set_precision(const char **ptr, t_info *info, va_list ap)
 {
-	// int tmp;
+	int tmp;
 
 	if (**ptr == '.')
 	{
@@ -88,9 +94,14 @@ void	set_precision(const char **ptr, t_info *info, va_list ap)
 		(*ptr)++;
 		if (**ptr == '*')
 		{
-			// tmp = va_arg(ap, int);
-			// info->precision = (tmp < 0 ? 0 : tmp);
-			info->precision = va_arg(ap, int);
+			tmp = va_arg(ap, int);
+			if (tmp < 0)
+			{
+				info->dot = false;
+				info->precision = 0;
+			}
+			else
+				info->precision = tmp;
 			(*ptr)++;
 		}
 		else if ('0' <= **ptr && **ptr <= '9')

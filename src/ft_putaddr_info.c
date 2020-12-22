@@ -46,7 +46,17 @@ int		ft_putaddr_info(void *ptr, t_info info)
 	int		dig;
 	int		len;
 
-	if (!(num_str = ft_itoa_addr((uintptr_t)ptr)))
+	// if (!ptr && info.precision == 0)
+	// {
+	// 	if (!(num_str = ft_strdup("0x")))
+	// 		return (0);
+	// }
+	if (!ptr && info.dot && info.precision == 0)
+	{
+		if (!(num_str = ft_strdup("0x")))
+			return (0);
+	}
+	else if (!(num_str = ft_itoa_addr((uintptr_t)ptr)))
 		return (0);
 	dig = ft_strlen(num_str);
 	len = 0;

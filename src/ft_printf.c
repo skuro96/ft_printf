@@ -21,6 +21,7 @@ int		convert(const char **ptr, va_list it)
 
 	len = 0;
 	set_info(ptr, &info, it);
+	// printf("%c\n", info.type);
 	if (info.type == '%')
 		len += ft_putper(info);
 	else if (info.type == 'c')
@@ -37,6 +38,8 @@ int		convert(const char **ptr, va_list it)
 		len += ft_puthex_info(va_arg(it, unsigned int), 'a', info);
 	else if (info.type == 'X')
 		len += ft_puthex_info(va_arg(it, unsigned int), 'A', info);
+	else
+		return (-1);
 	return (len);
 }
 
@@ -44,13 +47,18 @@ int		ft_printf(const char *format, ...)
 {
 	int len;
 	va_list it;
+	int tmp;
 
 	len = 0;
 	va_start(it, format);
 	while (*format)
 	{
 		if (*format == '%')
-			len += convert(&format, it);
+		{
+			if ((tmp = convert(&format, it)) == -1)
+				return (-1);
+			len += tmp;
+		}
 		else
 			len += write(1, format, 1);
 		format++;

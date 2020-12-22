@@ -15,8 +15,8 @@ int main(void)
 	// ret = printf("[%0-5d]\n", 420);
 	// ft_ret = ft_printf("[%0-5d]\n", 420);
 
-	ret = printf("[%0*.*i]\n", 5, -2, 8);
-	ft_ret = ft_printf("[%0*.*i]\n", 5, -2, 8);
+	ret = printf("[%2.9p]\n", 1234);
+	ft_ret = ft_printf("[%2.9p]\n", 1234);
 
 	printf("%d, %d\n", ret, ft_ret);
 	return (0);

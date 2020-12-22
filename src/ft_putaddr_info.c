@@ -46,11 +46,6 @@ int		ft_putaddr_info(void *ptr, t_info info)
 	int		dig;
 	int		len;
 
-	// if (!ptr && info.precision == 0)
-	// {
-	// 	if (!(num_str = ft_strdup("0x")))
-	// 		return (0);
-	// }
 	if (!ptr && info.dot && info.precision == 0)
 	{
 		if (!(num_str = ft_strdup("0x")))

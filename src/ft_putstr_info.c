@@ -23,7 +23,7 @@ int		ft_putstr_info(char *src, t_info info)
 		len += (info.minus ? ft_putstr(str) : 0);
 		while (len < (info.minus ? info.width : info.width - ft_strlen(str)))
 		{
-			len += ft_putchar(' ');
+			len += (info.zero ? ft_putchar('0') : ft_putchar(' '));
 		}
 		len += (info.minus ? 0 : ft_putstr(str));
 	}

@@ -20,34 +20,7 @@ void set_flag(const char **ptr, t_info *info)
 			info->zero = true;
 		(*ptr)++;
 	}
-	// printf("minus : %d, zero : %d\n", info->minus, info->zero);
 }
-
-// void	set_flag(const char **ptr, t_info *info)
-// {
-// 	info->zero = false;
-// 	info->minus = false;
-// 	if (**ptr == '0')
-// 	{
-// 		(*ptr)++;
-// 		info->zero = true;
-// 		if (**ptr == '-')
-// 		{
-// 			(*ptr)++;
-// 			info->minus = true;
-// 		}
-// 	}
-// 	else if (**ptr == '-')
-// 	{
-// 		(*ptr)++;
-// 		info->minus = true;
-// 		if (**ptr == '0')
-// 		{
-// 			(*ptr)++;
-// 			info->zero = true;
-// 		}
-// 	}
-// }
 
 bool	is_digit(char c)
 {

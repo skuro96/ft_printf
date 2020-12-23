@@ -1,25 +1,29 @@
 #include "ft_printf.h"
 
-int		len_addr(uintptr_t n)
+int		len_addr(uintptr_t n, t_info info)
 {
 	int len;
 
-	len = 3;
+	len = 1;
 	while (n >= 16)
 	{
 		n /= 16;
 		len++;
 	}
-	return (len);
+	if (info.dot)
+	{
+		len = (info.precision > len ? info.precision : len);
+	}
+	return (len + 2);
 }
 
-char	*ft_itoa_addr(uintptr_t n)
+char	*ft_itoa_addr(uintptr_t n, t_info info)
 {
 	char	*dest;
 	int		len;
 	int		i;
 
-	len = len_addr(n);
+	len = len_addr(n, info);
 	if (!(dest = malloc(len + 1)))
 		return (NULL);
 	i = len - 1;
@@ -51,7 +55,7 @@ int		ft_putaddr_info(void *ptr, t_info info)
 		if (!(num_str = ft_strdup("0x")))
 			return (0);
 	}
-	else if (!(num_str = ft_itoa_addr((uintptr_t)ptr)))
+	else if (!(num_str = ft_itoa_addr((uintptr_t)ptr, info)))
 		return (0);
 	dig = ft_strlen(num_str);
 	len = 0;
@@ -66,5 +70,6 @@ int		ft_putaddr_info(void *ptr, t_info info)
 	}
 	else
 		len += ft_putstr(num_str);
+	free(num_str);
 	return (len);
 }

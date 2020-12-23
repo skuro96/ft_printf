@@ -16,38 +16,36 @@ int		ft_putper(t_info info)
 
 int		convert(const char **ptr, va_list it)
 {
-	int len;
-	t_info info;
+	int		ret;
+	t_info	info;
 
-	len = 0;
 	set_info(ptr, &info, it);
-	// printf("%c\n", info.type);
 	if (info.type == '%')
-		len += ft_putper(info);
+		ret = ft_putper(info);
 	else if (info.type == 'c')
-		len += ft_putchar_info(va_arg(it, int), info);
+		ret = ft_putchar_info(va_arg(it, int), info);
 	else if (info.type == 's')
-		len += ft_putstr_info(va_arg(it, char *), info);
+		ret = ft_putstr_info(va_arg(it, char *), info);
 	else if (info.type == 'p')
-		len += ft_putaddr_info(va_arg(it, void *), info);
+		ret = ft_putaddr_info(va_arg(it, void *), info);
 	else if (info.type == 'd' || info.type == 'i')
-		len += ft_putint_info(va_arg(it, int), info);
+		ret = ft_putint_info(va_arg(it, int), info);
 	else if (info.type == 'u')
-		len += ft_putuint_info(va_arg(it, unsigned int), info);
+		ret = ft_putuint_info(va_arg(it, unsigned int), info);
 	else if (info.type == 'x')
-		len += ft_puthex_info(va_arg(it, unsigned int), 'a', info);
+		ret = ft_puthex_info(va_arg(it, unsigned int), 'a', info);
 	else if (info.type == 'X')
-		len += ft_puthex_info(va_arg(it, unsigned int), 'A', info);
+		ret = ft_puthex_info(va_arg(it, unsigned int), 'A', info);
 	else
-		return (-1);
-	return (len);
+		ret = -1;
+	return (ret);
 }
 
 int		ft_printf(const char *format, ...)
 {
 	int len;
 	va_list it;
-	int tmp;
+	int ret;
 
 	len = 0;
 	va_start(it, format);
@@ -55,9 +53,9 @@ int		ft_printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			if ((tmp = convert(&format, it)) == -1)
+			if ((ret = convert(&format, it)) == -1)
 				return (-1);
-			len += tmp;
+			len += ret;
 		}
 		else
 			len += write(1, format, 1);

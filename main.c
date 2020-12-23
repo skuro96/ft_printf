@@ -15,8 +15,11 @@ int main(void)
 	// ret = printf("[%0-5d]\n", 420);
 	// ft_ret = ft_printf("[%0-5d]\n", 420);
 
-	ret = printf("[%2.9p]\n", 1234);
-	ft_ret = ft_printf("[%2.9p]\n", 1234);
+	// ret = printf("[%*.*p]\n", 5, 5, (void *)1);
+	// ft_ret = ft_printf("[%*.*p]\n", 5, 5, (void *)1);
+
+	ret = printf("[%-p]\n", &a);
+	ft_ret = ft_printf("[%-p]\n", &a);
 
 	printf("%d, %d\n", ret, ft_ret);
 	return (0);

@@ -63,8 +63,6 @@ int		ft_putint_info(int n, t_info info)
 		}
 	}
 	else
-	{
 		len += ft_putstr(num_str);
-	}
 	return (len);
 }

@@ -5,6 +5,8 @@ int		ft_putchar_info(char c, t_info info)
 	int	len;
 	int	ch;
 
+	if (info.width == INT_MAX)
+		return (-1);
 	ch = (info.zero ? '0' : ' ');
 	len = 0;
 	if (info.minus)

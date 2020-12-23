@@ -40,26 +40,16 @@ char	*ft_strdup(const char *src)
 int	ft_atoi(const char *str)
 {
 	int				i;
-	int				sign;
 	unsigned long	ans;
 
 	i = 0;
-	while (str[i] == ' ' || ('\t' <= str[i] && str[i] <= '\r'))
-		i++;
-	sign = 1;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
 	ans = 0;
 	while ('0' <= str[i] && str[i] <= '9')
 	{
 		ans = ans * 10 + str[i] - '0';
 		i++;
 	}
-	return ((int)(ans * sign));
+	return ((int)ans);
 }
 
 int		digits(unsigned int nbr)

@@ -1,7 +1,8 @@
 //#include "ft_printf.h"
 #include <stdio.h>
+#include <limits.h>
+
 int ft_printf(const char *format, ...);
-// Total   OK: 408  KO: 623
 
 int main(void)
 {
@@ -9,18 +10,10 @@ int main(void)
 
 	int a = 42;
 
-	// ret = printf("[%05.*d]\n", -15, 42);
-	// ft_ret = ft_printf("[%05.*d]\n", -15, 42);
+	ret = printf("%*c, %*c", INT_MAX - 1, 'a', INT_MAX - 1, 'a');
+	// ft_ret = ft_printf("%*c", INT_MAX - 1, 'a');
 
-	// ret = printf("[%0-5d]\n", 420);
-	// ft_ret = ft_printf("[%0-5d]\n", 420);
-
-	// ret = printf("[%*.*p]\n", 5, 5, (void *)1);
-	// ft_ret = ft_printf("[%*.*p]\n", 5, 5, (void *)1);
-
-	ret = printf("[%-p]\n", &a);
-	ft_ret = ft_printf("[%-p]\n", &a);
-
-	printf("%d, %d\n", ret, ft_ret);
+	// printf("%d, %d\n", ret, ft_ret);
+	printf("%d\n", ret);
 	return (0);
 }

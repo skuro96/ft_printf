@@ -37,7 +37,7 @@ char	*ft_strdup(const char *src)
 	return (dest);
 }
 
-int	ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
 	int				i;
 	unsigned long	ans;
@@ -72,44 +72,61 @@ int		digits_base(unsigned int n, unsigned int base)
 	dig = 1;
 	while (n >= base)
 	{
-		n /= base;
 		dig++;
+		n /= base;
 	}
 	return (dig);
 }
 
-int		my_pow(int n, int pow)
+char	*ft_itoa(int nbr)
 {
-	if (pow == 0)
-		return (1);
-	return (n * my_pow(n, pow - 1));
+	char			*dest;
+	unsigned int	n;
+	int				len;
+	int				i;
+
+	n = (nbr < 0 ? -nbr : nbr);
+	len = digits(n) + (nbr < 0 ? 1 : 0);
+	if (!(dest = malloc(len + 1)))
+		return (NULL);
+	i = len - 1;
+	while (i >= 0)
+	{
+		if (i == 0 && nbr < 0)
+			dest[i] = '-';
+		else
+		{
+			dest[i] = n % 10 + '0';
+			n /= 10;
+		}
+		i--;
+	}
+	dest[len] = '\0';
+	return (dest);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa_2(unsigned int n, bool minus)
 {
-	size_t			i;
-	size_t			len;
-	unsigned int	nbr;
-	char			*dest;
+	char	*dest;
+	size_t	len;
+	int		i;
 
-	nbr = (n < 0 ? -n : n);
-	len = digits(nbr) + (n < 0 ? 1 : 0);
-	if (!(dest = malloc(sizeof(char) * (len + 1))))
+	len = digits(n) + (minus ? 1 : 0);
+	if (!(dest = malloc(len + 1)))
 		return (NULL);
-	i = 0;
-	if (n < 0)
+	i = len - 1;
+	while (i >= 0)
 	{
-		dest[i] = '-';
-		i++;
-		len--;
+		if (i == 0 && minus)
+			dest[i] = '-';
+		else
+		{
+			dest[i] = n % 10 + '0';
+			n /= 10;
+		}
+		i--;
 	}
-	while (len > 0)
-	{
-		dest[i++] = nbr / my_pow(10, len - 1) + '0';
-		nbr %= my_pow(10, len - 1);
-		len--;
-	}
-	dest[i] = '\0';
+	dest[len] = '\0';
 	return (dest);
 }
 
@@ -154,4 +171,18 @@ char	*ft_strndup(const char *src, int n)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+bool	ft_strchr_tf(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			return (true);
+		i++;
+	}
+	return (false);
 }

@@ -25,7 +25,7 @@ int				ft_atoi(const char *str);
 int				ft_putchar(char c);
 int				ft_strlen(const char *str);
 char			*ft_strdup(const char *src);
-char			*ft_itoa(int n);
+char	*ft_itoa(int nbr);
 char			*ft_strjoin(char const *s1, char const *s2);
 int				ft_putchar_info(char c, t_info info);
 int				ft_putint_info(int n, t_info info);
@@ -37,5 +37,7 @@ int		digits_base(unsigned int n, unsigned int base);
 int		ft_putaddr_info(void *ptr, t_info info);
 char	*ft_strndup(const char *src, int n);
 int		ft_putstr_info(char *src, t_info info);
+bool	ft_strchr_tf(char *str, char c);
+char	*ft_itoa_2(unsigned int n, bool minus);
 
 #endif

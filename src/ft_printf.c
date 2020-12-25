@@ -1,45 +1,28 @@
 #include "ft_printf.h"
 
-int		ft_putper(t_info info)
-{
-	int	len;
-	int	c;
-
-	c = (info.zero && !info.minus ? '0' : ' ');
-	len = 0;
-	if (info.minus)
-		len += ft_putchar('%');
-	while (len < info.width - 1)
-		len += ft_putchar(c);
-	return (len += (info.minus ? ft_putchar(' '): ft_putchar('%')));
-}
-
 int		convert(const char **ptr, va_list ap)
 {
-	int		ret;
 	t_info	info;
 
 	if (!set_info(ptr, &info, ap))
 		return (-1);
 	if (info.specifier == '%')
-		ret = ft_putper(info);
-	else if (info.specifier == 'c')
-		ret = ft_putchar_info(va_arg(ap, int), info);
-	else if (info.specifier == 's')
-		ret = ft_putstr_info(va_arg(ap, char *), info);
-	else if (info.specifier == 'p')
-		ret = ft_putaddr_info(va_arg(ap, void *), info);
-	else if (info.specifier == 'd' || info.specifier == 'i')
-		ret = ft_putint_info(va_arg(ap, int), info);
-	else if (info.specifier == 'u')
-		ret = ft_putuint_info(va_arg(ap, unsigned int), info);
-	else if (info.specifier == 'x')
-		ret = ft_puthex_info(va_arg(ap, unsigned int), 'a', info);
-	else if (info.specifier == 'X')
-		ret = ft_puthex_info(va_arg(ap, unsigned int), 'A', info);
-	else
-		ret = -1;
-	return (ret);
+		return (ft_putchar_info('%', info));
+	if (info.specifier == 'c')
+		return (ft_putchar_info(va_arg(ap, int), info));
+	if (info.specifier == 's')
+		return (ft_putstr_info(va_arg(ap, char *), info));
+	if (info.specifier == 'p')
+		return (ft_putaddr_info(va_arg(ap, void *), info));
+	if (info.specifier == 'd' || info.specifier == 'i')
+		return (ft_putint_info(va_arg(ap, int), info));
+	if (info.specifier == 'u')
+		return (ft_putuint_info(va_arg(ap, unsigned int), info));
+	if (info.specifier == 'x')
+		return (ft_puthex_info(va_arg(ap, unsigned int), 'a', info));
+	if (info.specifier == 'X')
+		return (ft_puthex_info(va_arg(ap, unsigned int), 'A', info));
+	return (-1);
 }
 
 int		ft_printf(const char *format, ...)

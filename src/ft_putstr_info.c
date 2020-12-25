@@ -16,18 +16,17 @@ int		ft_putstr_info(char *src, t_info info)
 	int len;
 
 	if (!(str = format_str(src, info)))
-		return (0);
+		return (-1);
 	len = 0;
 	if (info.width >= 0)
 	{
 		len += (info.minus ? ft_putstr(str) : 0);
 		while (len < (info.minus ? info.width : info.width - ft_strlen(str)))
-		{
 			len += (info.zero ? ft_putchar('0') : ft_putchar(' '));
-		}
 		len += (info.minus ? 0 : ft_putstr(str));
 	}
 	else
 		len += ft_putstr(str);
+	free(str);
 	return (len);
 }

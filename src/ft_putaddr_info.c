@@ -11,9 +11,7 @@ int		len_addr(uintptr_t n, t_info info)
 		len++;
 	}
 	if (info.dot)
-	{
 		len = (info.precision > len ? info.precision : len);
-	}
 	return (len + 2);
 }
 
@@ -53,20 +51,18 @@ int		ft_putaddr_info(void *ptr, t_info info)
 	if (!ptr && info.dot && info.precision == 0)
 	{
 		if (!(num_str = ft_strdup("0x")))
-			return (0);
+			return (-1);
 	}
 	else if (!(num_str = ft_itoa_addr((uintptr_t)ptr, info)))
-		return (0);
+		return (-1);
 	dig = ft_strlen(num_str);
 	len = 0;
 	if (info.width >= 0)
 	{
-		if (info.minus)
-			len += ft_putstr(num_str);
+		len += (info.minus ? ft_putstr(num_str) : 0);
 		while (len < (info.minus ? info.width : info.width - dig))
 			len += ft_putchar(' ');
-		if (!info.minus)
-			len += ft_putstr(num_str);
+		len += (info.minus ? 0 : ft_putstr(num_str));
 	}
 	else
 		len += ft_putstr(num_str);

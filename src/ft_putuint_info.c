@@ -1,39 +1,17 @@
 #include "ft_printf.h"
 
-char	*ft_itoa_uint(unsigned int n)
-{
-	char *dest;
-	int len;
-	int i;
-	int dig;
-
-	len = digits(n);
-	if (!(dest = malloc(len + 1)))
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		dig = my_pow(10, len - i - 1);
-		dest[i] = n / dig + '0';
-		n %= dig;
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
 char	*format_uint(unsigned int n, t_info info)
 {
-	char *tmp;
-	char *zeros;
-	char *ret;
-	int size;
-	int i;
+	char	*tmp;
+	char	*zeros;
+	char	*ret;
+	int		size;
+	int		i;
 
 	if (info.dot && info.precision == 0 && n == 0)
 		return (ft_strdup(""));
 	if (!info.dot || info.precision < digits(n))
-		return (ft_itoa_uint(n));
+		return (ft_itoa_2(n, false));
 	size = info.precision - digits(n);
 	if (!(zeros = malloc(size + 1)))
 		return (NULL);
@@ -44,44 +22,46 @@ char	*format_uint(unsigned int n, t_info info)
 		i++;
 	}
 	zeros[i] = '\0';
-	if (!(tmp = ft_itoa_uint(n)))
-		return (NULL);
-	ret = ft_strjoin(zeros, tmp); //free
+	tmp = ft_itoa_2(n, false);
+	ret = ft_strjoin(zeros, tmp);
 	free(zeros);
 	free(tmp);
 	return (ret);
 }
 
-int		ft_putuint_info(unsigned int n, t_info info)
+int		ft_putuint_width(t_info info, char *num_str)
 {
-	char *num_str;
-	int dig;
 	int len;
+	int	dig;
 
-	if (!(num_str = format_uint(n, info)))
-		return (0);
 	dig = ft_strlen(num_str);
 	len = 0;
-	if (info.width >= 0)
+	if (info.zero && !info.dot)
 	{
-		if (info.zero && !info.dot)
-		{
-			while (len < info.width - dig)
-				len += ft_putchar('0');
-			len += ft_putstr(num_str);
-		}
-		else
-		{
-			if (info.minus)
-				ft_putstr(num_str);
-			while (len < info.width - dig)
-				len += ft_putchar(' ');
-			if (info.minus)
-				len += ft_strlen(num_str);
-			else
-				len += ft_putstr(num_str);
-		}
+		while (len < info.width - dig)
+			len += ft_putchar('0');
+		len += ft_putstr(num_str);
 	}
+	else
+	{
+		len += (info.minus ? ft_putstr(num_str) : 0);
+		while (len < info.width - (info.minus ? 0 : dig))
+			len += ft_putchar(' ');
+		len += (info.minus ? 0 : ft_putstr(num_str));
+	}
+	return (len);
+}
+
+int		ft_putuint_info(unsigned int n, t_info info)
+{
+	char	*num_str;
+	int		len;
+
+	if (!(num_str = format_uint(n, info)))
+		return (-1);
+	len = 0;
+	if (info.width >= 0)
+		len += ft_putuint_width(info, num_str);
 	else
 		len += ft_putstr(num_str);
 	free(num_str);

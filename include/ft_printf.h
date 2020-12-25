@@ -19,7 +19,7 @@ typedef struct	s_info
 }				t_info;
 
 int				ft_printf(const char *, ...);
-void			set_info(const char **ptr, t_info *info, va_list it);
+bool			set_info(const char **ptr, t_info *info, va_list it);
 int				digits(unsigned int nbr);
 int				ft_atoi(const char *str);
 int				ft_putchar(char c);

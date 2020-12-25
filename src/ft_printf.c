@@ -19,7 +19,8 @@ int		convert(const char **ptr, va_list ap)
 	int		ret;
 	t_info	info;
 
-	set_info(ptr, &info, ap);
+	if (!set_info(ptr, &info, ap))
+		return (-1);
 	if (info.type == '%')
 		ret = ft_putper(info);
 	else if (info.type == 'c')
@@ -45,17 +46,15 @@ int		ft_printf(const char *format, ...)
 {
 	int		len;
 	int		ret;
-	int		left;
 
 	va_list	ap;
-	left = INT_MAX;
-	len = 0;
 	va_start(ap, format);
+	len = 0;
 	while (*format)
 	{
 		if (*format == '%')
 		{
-			if ((ret = convert(&format, ap, left)) == -1)
+			if ((ret = convert(&format, ap)) == -1)
 				return (-1);
 			len += ret;
 		}

@@ -95,11 +95,53 @@ void	set_type(const char **ptr, t_info *info)
 	info->type = **ptr;
 }
 
-void	set_info(const char **ptr, t_info *info, va_list ap)
+bool	is_specifier(char c)
+{
+	int i;
+
+	i = 0;
+	while ("%cspdiuxX"[i] != '\0')
+	{
+		if ("%cspdiuxX"[i] == c)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+bool	check_format(const char *str)
+{
+	while (is_flag(*str))
+		str++;
+	if (*str == '*')
+		str++;
+	else
+	{
+		while (is_digit(*str))
+			str++;
+	}
+	if (*str == '.')
+	{
+		str++;
+		if (*str == '*')
+			str++;
+		else
+		{
+			while (is_digit(*str))
+				str++;
+		}
+	}
+	return (is_specifier(*str));
+}
+
+bool	set_info(const char **ptr, t_info *info, va_list ap)
 {
 	(*ptr)++;
+	if (!check_format(*ptr))
+		return (false);
 	set_flag(ptr, info);
 	set_width(ptr, info, ap);
 	set_precision(ptr, info, ap);
 	set_type(ptr, info);
+	return (true);
 }

@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		len_addr(uintptr_t n, t_info info)
+static int		len_addr(uintptr_t n, t_info info)
 {
 	int len;
 
@@ -27,7 +27,7 @@ int		len_addr(uintptr_t n, t_info info)
 	return (len + 2);
 }
 
-char	*ft_itoa_addr(uintptr_t n, t_info info)
+static char		*ft_itoa_addr(uintptr_t n, t_info info)
 {
 	char	*dest;
 	int		len;
@@ -54,7 +54,7 @@ char	*ft_itoa_addr(uintptr_t n, t_info info)
 	return (dest);
 }
 
-int		ft_putaddr_info(void *ptr, t_info info)
+int				ft_putaddr_info(void *ptr, t_info info)
 {
 	char	*num_str;
 	int		dig;

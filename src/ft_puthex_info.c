@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*ft_itoa_hex(unsigned int n, char a_size)
+static char	*ft_itoa_hex(unsigned int n, char a_size)
 {
 	char	*dest;
 	int		len;
@@ -32,7 +32,7 @@ char	*ft_itoa_hex(unsigned int n, char a_size)
 	return (dest);
 }
 
-char	*format_hex(unsigned int n, char a_size, t_info info)
+static char	*format_hex(unsigned int n, char a_size, t_info info)
 {
 	int		zsize;
 	char	*zeros;
@@ -57,7 +57,7 @@ char	*format_hex(unsigned int n, char a_size, t_info info)
 	return (ret);
 }
 
-int		ft_puthex_width(t_info info, char *num_str)
+static int	ft_puthex_width(t_info info, char *num_str)
 {
 	int len;
 	int dig;
@@ -80,7 +80,7 @@ int		ft_puthex_width(t_info info, char *num_str)
 	return (len);
 }
 
-int		ft_puthex_info(unsigned int n, char a_size, t_info info)
+int			ft_puthex_info(unsigned int n, char a_size, t_info info)
 {
 	char	*num_str;
 	int		len;

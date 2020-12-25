@@ -12,17 +12,20 @@
 
 #include "ft_printf.h"
 
-char	*format_str(char *str, t_info info)
+static char	*format_str(char *str, t_info info)
 {
+	int prec;
+
+	prec = info.precision;
 	if (!str)
-		return (info.dot ? ft_strndup("(null)", info.precision) : ft_strdup("(null)"));
-	else if (info.precision < 0)
+		return (info.dot ? ft_strndup("(null)", prec) : ft_strdup("(null)"));
+	else if (prec < 0)
 		return (ft_strdup(str));
 	else
-		return (info.dot ? ft_strndup(str, info.precision) : ft_strdup(str));
+		return (info.dot ? ft_strndup(str, prec) : ft_strdup(str));
 }
 
-int		ft_putstr_info(char *src, t_info info)
+int			ft_putstr_info(char *src, t_info info)
 {
 	char	*str;
 	int		len;

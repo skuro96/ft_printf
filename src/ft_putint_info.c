@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*format_num(int n, t_info info)
+static char	*format_num(int n, t_info info)
 {
 	char	*ret;
 	char	*zeros;
@@ -43,7 +43,7 @@ char	*format_num(int n, t_info info)
 	return (ret);
 }
 
-int		ft_putint_width(int n, t_info info, char *num_str)
+static int	ft_putint_width(int n, t_info info, char *num_str)
 {
 	int len;
 	int digit;
@@ -67,7 +67,7 @@ int		ft_putint_width(int n, t_info info, char *num_str)
 	return (len);
 }
 
-int		ft_putint_info(int n, t_info info)
+int			ft_putint_info(int n, t_info info)
 {
 	int		len;
 	char	*num_str;

@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	convert(const char **ptr, va_list ap)
+static int	convert(const char **ptr, va_list ap)
 {
 	t_info	info;
 
@@ -37,7 +37,7 @@ int	convert(const char **ptr, va_list ap)
 	return (-1);
 }
 
-int	ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
 	int		len;
 	int		ret;
@@ -54,7 +54,7 @@ int	ft_printf(const char *format, ...)
 			len += ret;
 		}
 		else
-			len += write(1, format, 1);
+			len += ft_putchar(*format);
 		format++;
 	}
 	va_end(ap);

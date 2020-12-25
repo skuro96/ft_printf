@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*format_uint(unsigned int n, t_info info)
+static char	*format_uint(unsigned int n, t_info info)
 {
 	char	*tmp;
 	char	*zeros;
@@ -41,7 +41,7 @@ char	*format_uint(unsigned int n, t_info info)
 	return (ret);
 }
 
-int		ft_putuint_width(t_info info, char *num_str)
+static int	ft_putuint_width(t_info info, char *num_str)
 {
 	int len;
 	int	dig;
@@ -64,7 +64,7 @@ int		ft_putuint_width(t_info info, char *num_str)
 	return (len);
 }
 
-int		ft_putuint_info(unsigned int n, t_info info)
+int			ft_putuint_info(unsigned int n, t_info info)
 {
 	char	*num_str;
 	int		len;

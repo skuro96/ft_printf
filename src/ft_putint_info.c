@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static char	*format_num(int n, t_info info)
+static char	*format_num(int n, t_info inf)
 {
 	char	*ret;
 	char	*zeros;
@@ -20,11 +20,11 @@ static char	*format_num(int n, t_info info)
 	int		len;
 	int		i;
 
-	if (info.dot && info.precision == 0 && n == 0)
+	if (inf.dot && inf.precision == 0 && n == 0)
 		return (ft_strdup(""));
-	if (!info.dot || info.precision < (n < 0 ? digits(-n) + 1 : digits(n)))
+	if (!inf.dot || inf.precision < (n < 0 ? digits(-n) + 1 : digits(n)))
 		return (ft_itoa(n));
-	len = (n < 0 ? info.precision - digits(-n) + 1 : info.precision - digits(n));
+	len = (n < 0 ? inf.precision - digits(-n) + 1 : inf.precision - digits(n));
 	zeros = malloc(len + 1);
 	i = 0;
 	while (i < len)

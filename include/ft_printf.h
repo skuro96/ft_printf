@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skurosu <skurosu@student.42tokyo.j>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/26 03:25:59 by skurosu           #+#    #+#             */
+/*   Updated: 2020/12/26 03:26:53 by skurosu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
@@ -14,11 +26,11 @@ typedef struct	s_info
 	bool	minus;
 	int		width;
 	bool	dot;
-	int 	precision;
+	int		precision;
 	char	specifier;
 }				t_info;
 
-int				ft_printf(const char *, ...);
+int				ft_printf(const char *format, ...);
 
 bool			set_info(const char **ptr, t_info *info, va_list it);
 int				ft_putchar_info(char c, t_info info);

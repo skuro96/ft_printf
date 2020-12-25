@@ -6,7 +6,7 @@
 /*   By: skurosu <skurosu@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 01:48:32 by skurosu           #+#    #+#             */
-/*   Updated: 2020/12/26 01:49:02 by skurosu          ###   ########.fr       */
+/*   Updated: 2020/12/26 03:27:54 by skurosu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	ft_strchr_tf(char *str, char c)
 	return (false);
 }
 
-char		*freeturn(char **s1, char **s2, char *ret)
+char	*freeturn(char **s1, char **s2, char *ret)
 {
 	if (s1)
 	{

@@ -87,25 +87,20 @@ char	*ft_itoa(int nbr)
 	return (dest);
 }
 
-char	*ft_itoa_2(unsigned int n, bool minus)
+char	*ft_itoa_us(unsigned int n)
 {
 	char	*dest;
 	size_t	len;
 	int		i;
 
-	len = digits(n) + (minus ? 1 : 0);
+	len = digits(n);
 	if (!(dest = malloc(len + 1)))
 		return (NULL);
 	i = len - 1;
 	while (i >= 0)
 	{
-		if (i == 0 && minus)
-			dest[i] = '-';
-		else
-		{
-			dest[i] = n % 10 + '0';
-			n /= 10;
-		}
+		dest[i] = n % 10 + '0';
+		n /= 10;
 		i--;
 	}
 	dest[len] = '\0';

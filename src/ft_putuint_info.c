@@ -23,22 +23,17 @@ static char	*format_uint(unsigned int n, t_info info)
 	if (info.dot && info.precision == 0 && n == 0)
 		return (ft_strdup(""));
 	if (!info.dot || info.precision < digits(n))
-		return (ft_itoa_2(n, false));
+		return (ft_itoa_us(n));
 	size = info.precision - digits(n);
 	if (!(zeros = malloc(size + 1)))
 		return (NULL);
 	i = 0;
 	while (i < size)
-	{
-		zeros[i] = '0';
-		i++;
-	}
+		zeros[i++] = '0';
 	zeros[i] = '\0';
-	tmp = ft_itoa_2(n, false);
+	tmp = ft_itoa_us(n);
 	ret = ft_strjoin(zeros, tmp);
-	free(zeros);
-	free(tmp);
-	return (ret);
+	return (freeturn(&zeros, &tmp, ret));
 }
 
 static int	ft_putuint_width(t_info info, char *num_str)

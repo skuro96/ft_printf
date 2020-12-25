@@ -45,3 +45,18 @@ bool	ft_strchr_tf(char *str, char c)
 	}
 	return (false);
 }
+
+char		*freeturn(char **s1, char **s2, char *ret)
+{
+	if (s1)
+	{
+		free(*s1);
+		*s1 = NULL;
+	}
+	if (s2)
+	{
+		free(*s2);
+		*s2 = NULL;
+	}
+	return (ret);
+}

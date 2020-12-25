@@ -52,9 +52,7 @@ static char	*format_hex(unsigned int n, char a_size, t_info info)
 	zeros[i] = '\0';
 	tmp = ft_itoa_hex(n, a_size);
 	ret = ft_strjoin(zeros, tmp);
-	free(zeros);
-	free(tmp);
-	return (ret);
+	return (freeturn(&zeros, &tmp, ret));
 }
 
 static int	ft_puthex_width(t_info info, char *num_str)
@@ -92,5 +90,6 @@ int			ft_puthex_info(unsigned int n, char a_size, t_info info)
 		len += ft_puthex_width(info, num_str);
 	else
 		len += ft_putstr(num_str);
+	free(num_str);
 	return (len);
 }

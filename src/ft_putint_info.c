@@ -36,11 +36,9 @@ static char	*format_num(int n, t_info info)
 		i++;
 	}
 	zeros[i] = '\0';
-	tmp = (n < 0 ? ft_itoa_2(-n, false) : ft_itoa_2(n, false));
+	tmp = (n < 0 ? ft_itoa_us(-n) : ft_itoa_us(n));
 	ret = ft_strjoin(zeros, tmp);
-	free(zeros);
-	free(tmp);
-	return (ret);
+	return (freeturn(&zeros, &tmp, ret));
 }
 
 static int	ft_putint_width(int n, t_info info, char *num_str)

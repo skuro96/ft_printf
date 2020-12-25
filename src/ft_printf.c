@@ -21,21 +21,21 @@ int		convert(const char **ptr, va_list ap)
 
 	if (!set_info(ptr, &info, ap))
 		return (-1);
-	if (info.type == '%')
+	if (info.specifier == '%')
 		ret = ft_putper(info);
-	else if (info.type == 'c')
+	else if (info.specifier == 'c')
 		ret = ft_putchar_info(va_arg(ap, int), info);
-	else if (info.type == 's')
+	else if (info.specifier == 's')
 		ret = ft_putstr_info(va_arg(ap, char *), info);
-	else if (info.type == 'p')
+	else if (info.specifier == 'p')
 		ret = ft_putaddr_info(va_arg(ap, void *), info);
-	else if (info.type == 'd' || info.type == 'i')
+	else if (info.specifier == 'd' || info.specifier == 'i')
 		ret = ft_putint_info(va_arg(ap, int), info);
-	else if (info.type == 'u')
+	else if (info.specifier == 'u')
 		ret = ft_putuint_info(va_arg(ap, unsigned int), info);
-	else if (info.type == 'x')
+	else if (info.specifier == 'x')
 		ret = ft_puthex_info(va_arg(ap, unsigned int), 'a', info);
-	else if (info.type == 'X')
+	else if (info.specifier == 'X')
 		ret = ft_puthex_info(va_arg(ap, unsigned int), 'A', info);
 	else
 		ret = -1;

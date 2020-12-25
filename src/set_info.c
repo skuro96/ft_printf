@@ -90,9 +90,9 @@ void	set_precision(const char **ptr, t_info *info, va_list ap)
 		info->dot = false;
 }
 
-void	set_type(const char **ptr, t_info *info)
+void	set_specifier(const char **ptr, t_info *info)
 {
-	info->type = **ptr;
+	info->specifier = **ptr;
 }
 
 bool	is_specifier(char c)
@@ -142,6 +142,6 @@ bool	set_info(const char **ptr, t_info *info, va_list ap)
 	set_flag(ptr, info);
 	set_width(ptr, info, ap);
 	set_precision(ptr, info, ap);
-	set_type(ptr, info);
+	set_specifier(ptr, info);
 	return (true);
 }

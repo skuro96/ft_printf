@@ -1,5 +1,6 @@
 42TESTERS-PRINTF/
 pft_2019/
 printf-tester/
-main.c
-pft_2019/
+/main.c
+/src/*.o
+/a.out

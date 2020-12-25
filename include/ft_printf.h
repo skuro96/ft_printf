@@ -15,7 +15,7 @@ typedef struct	s_info
 	int		width;
 	bool	dot;
 	int 	precision;
-	char	type;
+	char	specifier;
 }				t_info;
 
 int				ft_printf(const char *, ...);

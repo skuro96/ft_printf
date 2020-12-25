@@ -10,10 +10,12 @@ int main(void)
 
 	int a = 42;
 
-	ret = printf("%*c, %*c", INT_MAX - 1, 'a', INT_MAX - 1, 'a');
+	// ret = printf("%*c, %*c", INT_MAX - 1, 'a', INT_MAX - 1, 'a');
 	// ft_ret = ft_printf("%*c", INT_MAX - 1, 'a');
 
-	// printf("%d, %d\n", ret, ft_ret);
-	printf("%d\n", ret);
+	ret = printf("%.5,%da\n", 1);
+	ft_ret = ft_printf("%.5,%db\n", 1);
+
+	printf("%d, %d\n", ret, ft_ret);
 	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putstr_info.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skurosu <skurosu@student.42tokyo.j>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/26 01:55:28 by skurosu           #+#    #+#             */
+/*   Updated: 2020/12/26 01:57:59 by skurosu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 char	*format_str(char *str, t_info info)
@@ -12,8 +24,8 @@ char	*format_str(char *str, t_info info)
 
 int		ft_putstr_info(char *src, t_info info)
 {
-	char *str;
-	int len;
+	char	*str;
+	int		len;
 
 	if (!(str = format_str(src, info)))
 		return (-1);

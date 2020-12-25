@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skurosu <skurosu@student.42tokyo.j>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/26 01:52:50 by skurosu           #+#    #+#             */
+/*   Updated: 2020/12/26 02:00:49 by skurosu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int		convert(const char **ptr, va_list ap)
+int	convert(const char **ptr, va_list ap)
 {
 	t_info	info;
 
@@ -25,12 +37,12 @@ int		convert(const char **ptr, va_list ap)
 	return (-1);
 }
 
-int		ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	int		len;
 	int		ret;
-
 	va_list	ap;
+
 	va_start(ap, format);
 	len = 0;
 	while (*format)

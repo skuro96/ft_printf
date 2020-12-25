@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putint_info.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skurosu <skurosu@student.42tokyo.j>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/26 01:50:04 by skurosu           #+#    #+#             */
+/*   Updated: 2020/12/26 01:52:35 by skurosu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 char	*format_num(int n, t_info info)
@@ -6,14 +18,15 @@ char	*format_num(int n, t_info info)
 	char	*zeros;
 	char	*tmp;
 	int		len;
+	int		i;
 
 	if (info.dot && info.precision == 0 && n == 0)
 		return (ft_strdup(""));
 	if (!info.dot || info.precision < (n < 0 ? digits(-n) + 1 : digits(n)))
 		return (ft_itoa(n));
-	len = (n < 0 ? info.precision - digits(-n) + 1 : info.precision - digits(n)); 
+	len = (n < 0 ? info.precision - digits(-n) + 1 : info.precision - digits(n));
 	zeros = malloc(len + 1);
-	int i = 0;
+	i = 0;
 	while (i < len)
 	{
 		if (i == 0 && n < 0)

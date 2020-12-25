@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_puthex_info.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skurosu <skurosu@student.42tokyo.j>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/26 01:49:17 by skurosu           #+#    #+#             */
+/*   Updated: 2020/12/26 01:49:47 by skurosu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 char	*ft_itoa_hex(unsigned int n, char a_size)
@@ -80,5 +92,5 @@ int		ft_puthex_info(unsigned int n, char a_size, t_info info)
 		len += ft_puthex_width(info, num_str);
 	else
 		len += ft_putstr(num_str);
-	return (len);	
+	return (len);
 }

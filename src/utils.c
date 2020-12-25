@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skurosu <skurosu@student.42tokyo.j>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/26 01:48:32 by skurosu           #+#    #+#             */
+/*   Updated: 2020/12/26 01:49:02 by skurosu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int		ft_putchar(char c)
@@ -7,7 +19,7 @@ int		ft_putchar(char c)
 
 int		ft_putstr(char *str)
 {
-	return write(1, str, ft_strlen(str));
+	return (write(1, str, ft_strlen(str)));
 }
 
 int		ft_strlen(const char *str)
@@ -23,7 +35,7 @@ int		ft_strlen(const char *str)
 char	*ft_strdup(const char *src)
 {
 	char	*dest;
-	int		i;	
+	int		i;
 
 	i = 0;
 	if ((dest = malloc(sizeof(char) * (ft_strlen(src) + 1))) == NULL)

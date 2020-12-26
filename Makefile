@@ -1,12 +1,13 @@
 NAME = libftprintf.a
 
 CC = gcc
-INCLUDE = -I ./include/
+INCLUDE = -I ./includes/
 
 CFLAGS = -Wall -Wextra -Werror $(INCLUDE)
 RM = rm -rf
 
-SRCDIR = ./src/
+SRCDIR = ./srcs/
+
 SRCNAME = 
 SRCNAME += ft_printf.c
 SRCNAME += set_info.c

@@ -12,11 +12,13 @@
 
 #include "ft_printf.h"
 
-static int	convert(const char **ptr, va_list ap)
+static int	convert(const char **ptr, va_list ap, int left)
 {
 	t_info	info;
 
 	if (!set_info(ptr, &info, ap))
+		return (-1);
+	if (left < info.width || (info.dot && left < info.precision))
 		return (-1);
 	if (info.specifier == '%')
 		return (ft_putchar_info('%', info));
@@ -40,6 +42,7 @@ static int	convert(const char **ptr, va_list ap)
 int			ft_printf(const char *format, ...)
 {
 	int		len;
+	int		left;
 	int		ret;
 	va_list	ap;
 
@@ -47,14 +50,19 @@ int			ft_printf(const char *format, ...)
 	len = 0;
 	while (*format)
 	{
+		left = INT_MAX - len - 1;
 		if (*format == '%')
 		{
-			if ((ret = convert(&format, ap)) == -1)
+			if ((ret = convert(&format, ap, left)) == -1)
 				return (-1);
 			len += ret;
 		}
 		else
+		{
+			if (left < 1)
+				return (-1);
 			len += ft_putchar(*format);
+		}
 		format++;
 	}
 	va_end(ap);

@@ -6,7 +6,7 @@
 /*   By: skurosu <skurosu@student.42tokyo.j>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 01:52:50 by skurosu           #+#    #+#             */
-/*   Updated: 2020/12/26 02:00:49 by skurosu          ###   ########.fr       */
+/*   Updated: 2020/12/26 16:12:53 by skurosu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,10 @@ int			ft_printf(const char *format, ...)
 				return (-1);
 			len += ret;
 		}
+		else if (left < 1)
+			return (-1);
 		else
-		{
-			if (left < 1)
-				return (-1);
 			len += ft_putchar(*format);
-		}
 		format++;
 	}
 	va_end(ap);

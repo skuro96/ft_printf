@@ -118,10 +118,10 @@ bool	set_info(const char **ptr, t_info *info, va_list ap)
 	info->width = -1;
 	info->dot = false;
 	info->precision = 0;
-	info->specifier = 0;
+	info->spec = 0;
 	set_flag(ptr, info);
 	set_width(ptr, info, ap);
 	set_precision(ptr, info, ap);
-	info->specifier = **ptr;
+	info->spec = **ptr;
 	return (true);
 }

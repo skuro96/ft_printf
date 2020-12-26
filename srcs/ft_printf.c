@@ -14,29 +14,30 @@
 
 static int	convert(const char **ptr, va_list ap, int left)
 {
+	int		ret;
 	t_info	info;
 
 	if (!set_info(ptr, &info, ap))
 		return (-1);
 	if (left < info.width || (info.dot && left < info.precision))
 		return (-1);
-	if (info.specifier == '%')
-		return (ft_putchar_info('%', info));
-	if (info.specifier == 'c')
-		return (ft_putchar_info(va_arg(ap, int), info));
-	if (info.specifier == 's')
-		return (ft_putstr_info(va_arg(ap, char *), info));
-	if (info.specifier == 'p')
-		return (ft_putaddr_info(va_arg(ap, void *), info));
-	if (info.specifier == 'd' || info.specifier == 'i')
-		return (ft_putint_info(va_arg(ap, int), info));
-	if (info.specifier == 'u')
-		return (ft_putuint_info(va_arg(ap, unsigned int), info));
-	if (info.specifier == 'x')
-		return (ft_puthex_info(va_arg(ap, unsigned int), 'a', info));
-	if (info.specifier == 'X')
-		return (ft_puthex_info(va_arg(ap, unsigned int), 'A', info));
-	return (-1);
+	if (info.spec == '%')
+		ret = ft_putchar_info('%', info);
+	if (info.spec == 'c')
+		ret = ft_putchar_info(va_arg(ap, int), info);
+	if (info.spec == 's')
+		ret = ft_putstr_info(va_arg(ap, char *), info);
+	if (info.spec == 'p')
+		ret = ft_putaddr_info(va_arg(ap, void *), info);
+	if (info.spec == 'd' || info.spec == 'i')
+		ret = ft_putint_info(va_arg(ap, int), info);
+	if (info.spec == 'u')
+		ret = ft_putuint_info(va_arg(ap, unsigned int), info);
+	if (info.spec == 'x' || info.spec == 'X')
+		ret = ft_puthex_info(va_arg(ap, unsigned int), info.spec - 23, info);
+	if (ret == -1 || ret > left)
+		return (-1);
+	return (ret);
 }
 
 int			ft_printf(const char *format, ...)

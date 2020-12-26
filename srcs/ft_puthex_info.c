@@ -84,7 +84,7 @@ int			ft_puthex_info(unsigned int n, char a_size, t_info info)
 	int		len;
 
 	if (!(num_str = format_hex(n, a_size, info)))
-		return (0);
+		return (-1);
 	len = 0;
 	if (info.width >= 0)
 		len += ft_puthex_width(info, num_str);
